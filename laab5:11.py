@@ -1,34 +1,48 @@
+from dataclasses import dataclass
 from enum import Enum
-
-class Type(Enum): 
+'''class Enum enables create lists with constants'''
+class Type(Enum):
+    '''Enumeration of clothing types''' 
     SHIRT = 1
     JEANS = 2
     JACKET = 3 
 
+@dataclass
 class Clothing:
-    def __init__(self, name, description, location, colour, size, type):
-        self.__name = name 
-        self.__description = description
-        self.__location = location
-        self.__colour = colour 
-        self.__size = size
-        self.__type = type
+        name: str
+        description: str 
+        location: str 
+        colour: str 
+        size: str 
+        element: Type
 
-    def __str__(self):
-        return f"Clothing: {self.__name}, description: {self.__description}, location: {self.__location}, colour: {self.__colour}, size: {self.__size}, type: {self.__type.name}" 
-
-    def __repr__(self):
-        return f"Clothing: ({self.__name}, {self.__description}, {self.__location}, {self.__colour}, {self.__size}, {self.__type.name})"
-
-
-    def get_size(self):
-        return self.__size
+        def __str__(self):  
+            return f"Clothing(\'{self.name}\',\
+            \'{self.description}\',\
+            \'{self.location}\',\
+            \'{self.colour}\',\
+            \'{self.size}\',\
+            {self.element.name})"
     
-    def get_name(self):
-        return self.__name
+        def __repr__(self):
+            return f"Clothing(\'{self.name}\',\
+            \'{self.description}\',\
+            \'{self.location}\',\
+            \'{self.colour}\',\
+            \'{self.size}\',\
+            {self.element.name})"
+    
+def get_size(self): 
+    return self.size 
+'''Returns attribute size value'''
 
-    def get_type(self):
-        return self.__type
+def get_name(self):
+        return self.name 
+'''Returns attribute name value '''
+
+def get_type(self):
+        return self.element 
+'''Returns attribute element value '''
 
 class Wardrobe:
     def __init__(self):
@@ -38,16 +52,16 @@ class Wardrobe:
         self.__clothing.append(item)
 
     def remove_clothing(self, item_name):
-        for index, item in enumerate(self.__clothing):  # Цикл for перебирає всі елементи списку в гардеробі
+        for index, item in enumerate(self.__clothing): 
+            '''this cycle 'for' checks every element in the wardrobe'''
             if item.get_name() == item_name: 
-                '''
-                Перевіряє, чи ім'я поточного предмету одягу (отриманого за
-             допомогою методу get_name()) відповідає переданому item_name, яке слід видалити.
-             '''
-                self.__clothing.pop(index) 
-                '''Якщо ім'я збігається, то викликається метод pop(index), який видаляє
-                   елемент зі списку за вказаним індексом index'''
-    
+                ''' Method get_name() checks that the name of
+                    the clothing responds to passed item_name '''
+                self.__clothing.pop(index)
+            '''
+            if name matches, the method pop(index), that 
+            removes elements from list be index, are called
+            '''
     def get_clothing(self):
         return self.__clothing
     
@@ -75,21 +89,17 @@ if __name__ == "__main__":
     wardrobe.add_clothing(clothing2)
     wardrobe.add_clothing(clothing3)
 
+    
     print('Original Wardrobe: ' + ', '.join([item.get_name() for item in wardrobe.get_clothing()]))
 
-    wardrobe.sort_clothing_by_size()
+    wardrobe.sort_clothing_by_size()    
     print("Wardrobe after sorting by size: " + ', '.join([item.get_name() for item in wardrobe.get_clothing()]))
-
-    '''
-    [item.get_name() for item in wardrobe.get_clothing()] - витягує імена предметів одягу з гардеробу для отримання імені кожного предмета.
-    ', '.join(...): Використовує функцію join для об'єднання всіх імен предметів у єдиний рядок, розділений комою та пробілом.
-    Цей вираз формує рядок, який містить імена всіх предметів одягу у гардеробі, розділені комою та пробілом
-    '''
 
     print("\nCan you go out?") 
     print(wardrobe.are_go_out())
 
     wardrobe.remove_clothing("Jeans")
     print("\nWardrobe after removing Jeans:")
-    for item in wardrobe.get_clothing():'''Цикл for перебирає всі елементи списку предметів одягу у гардеробі'''
+    for item in wardrobe.get_clothing(): 
         print(item)
+    
